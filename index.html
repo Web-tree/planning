@@ -1,1 +1,215 @@
-<script>alert(1);</script>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/sigma.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/conrad.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/utils/sigma.utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/utils/sigma.polyfills.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/sigma.settings.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.dispatcher.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.configurable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.graph.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.camera.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.quad.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/classes/sigma.classes.edgequad.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/captors/sigma.captors.mouse.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/captors/sigma.captors.touch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/sigma.renderers.canvas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/sigma.renderers.webgl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/sigma.renderers.svg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/sigma.renderers.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/middlewares/sigma.middlewares.rescale.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/middlewares/sigma.middlewares.copy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/misc/sigma.misc.animation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/misc/sigma.misc.bindEvents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/misc/sigma.misc.bindDOMEvents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/src/misc/sigma.misc.drawHovers.js"></script>
+    <script src="http://fenixrepo.fao.org/cdn/faostat/js/sigma/1.1.0/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js"></script>
+    <script src="http://fenixrepo.fao.org/cdn/faostat/js/sigma/1.1.0/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js"></script>
+    <script src="http://fenixrepo.fao.org/cdn/faostat/js/sigma/1.1.0/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js"></script>
+    <script src="http://fenixrepo.fao.org/cdn/faostat/js/sigma/1.1.0/plugins/sigma.renderers.edgeLabels/settings.js"></script>
+    <!-- Sigma plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sigma@1.2.1/plugins/sigma.layout.forceAtlas2/worker.js"></script>
+
+
+    <style>
+        html { height:800px;}
+        body {height: 100%; margin:0;}
+        #sigma-container {
+            width:100%;
+            height:100%;
+            /*background-color:#E1E1E1*/
+        }
+    </style>
+</head>
+<body>
+    <div id='sigma-container'></div>
+    <script>
+        var s = new sigma(
+            {
+                renderer: {
+                    container: document.getElementById('sigma-container'),
+                    type: 'canvas'
+                },
+                settings: {
+                    minArrowSize: 10
+                }
+            }
+        );
+
+        const unionColor = '#ee2839';
+        const mydataColor = '#262f76';
+        const commonLibColor = '#a8a8a8';
+
+        let unionXCoord = 0;
+        let unionYCoord = 1;
+        let mydataXCoord = 0;
+        let mydataYCoord = 2;
+        let commonLibsXCoord = 0;
+        let commonLibsYCoord = 3;
+
+        edgeId = 0;
+
+        var graph = {
+            nodes: [
+                {
+                    id:  1,
+                    label: 'Extract webtree theme',
+                    size: 1,
+                    x: commonLibsXCoord++,
+                    y: commonLibsYCoord,
+                    color: commonLibColor
+                },
+                {
+                    id:  2,
+                    label: 'Init union front',
+                    x: unionXCoord++,
+                    y: unionYCoord,
+                    size: 1,
+                    color: unionColor
+                },
+                {
+                    id:  3,
+                    label: 'Share data to users',
+                    x: mydataXCoord++,
+                    y: mydataYCoord,
+                    size: 1,
+                    color: mydataColor
+                },
+                {
+                    id:  4,
+                    label: 'Share data to union',
+                    x: mydataXCoord++,
+                    y: mydataYCoord,
+                    size: 1,
+                    color: mydataColor
+                },
+                {
+                    id:  5,
+                    label: 'Init union backend',
+                    x: unionXCoord++,
+                    y: unionYCoord,
+                    size: 1,
+                    color: unionColor
+                },
+                {
+                    id:  6,
+                    label: 'Union MVP',
+                    x: unionXCoord++,
+                    y: unionYCoord,
+                    size: 1,
+                    color: unionColor
+                },
+                {
+                    id:  7,
+                    label: 'Api - union creation',
+                    x: unionXCoord++,
+                    y: unionYCoord,
+                    size: 1,
+                    color: unionColor
+                },
+                {
+                    id:  8,
+                    label: 'Api union - key, secret generation',
+                    x: unionXCoord++,
+                    y: unionYCoord,
+                    size: 1,
+                    color: unionColor
+                },
+
+            ],
+            edges: [
+                {
+                    id: edgeId++,
+                    label: 'Depends on',
+                    source: 1,
+                    target: 2,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+                {
+                    id: edgeId++,
+                    label: 'Depends on',
+                    source: 4,
+                    target: 6,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+                {
+                    id: edgeId++,
+                    label: 'Is part of',
+                    source: 5,
+                    target: 6,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+                {
+                    id: edgeId++,
+                    label: 'Is part of',
+                    source: 7,
+                    target: 6,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+                {
+                    id: edgeId++,
+                    label: 'Is part of',
+                    source: 8,
+                    target: 6,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+                {
+                    id: edgeId++,
+                    label: 'Is part of',
+                    source: 2,
+                    target: 6,
+                    color: '#202020',
+                    type: 'curvedArrow'
+                },
+            ]
+        };
+
+
+        // load the graph
+        s.graph.read(graph);
+        // draw the graph
+        s.refresh();
+        // launch force-atlas for 5sec
+        // s.startForceAtlas2();
+        // window.setTimeout(function() {s.killForceAtlas2()}, 10000);
+    </script>
+</body>
+</html>
